@@ -1,6 +1,6 @@
 # jb-pwa
 
-> Nuxt.js project
+> Basic Nuxt.js template for JustBookr projects
 
 ## Build Setup
 
@@ -12,12 +12,8 @@ $ npm install # Or yarn install
 # service worker is disabled in dev
 $ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm start
-
-# generate static project
+# generate project
 $ npm run generate
 ```
 
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+To be hosted on AWS S3 via CloudFront distribution using JustBookr SSL.
