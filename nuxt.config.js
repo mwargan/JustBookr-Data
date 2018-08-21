@@ -1,30 +1,41 @@
 require('dotenv').config()
 
 module.exports = {
+  mode: 'spa',
   /*
    ** Build configuration
    */
-  build: {},
+  build: {
+    extractCSS: true
+  },
   /*
    ** Headers
    ** Common headers are already provided by @nuxtjs/pwa preset
    */
   head: {
-    title: "JustBookr Time",
-    titleTemplate: '%s - ' + 'JustBookr Time',
+    title: "JustBookr Data Center",
+    titleTemplate: '%s - ' + 'JustBookr Data Center',
     meta: [
-      { hid: 'description', name: 'description', content: 'JustBookr PWA project' }
-    ]
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover' },
+      { hid: 'description', name: 'description', content: 'JustBookr Data Center for viewing and analyzing data on JustBookr' }
+    ],
+    noscript: [
+      { innerHTML: 'Body No Scripts, Javascript is Required', body: true }
+    ],
   },
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#3e73b9' },
+  loading: {
+    color: '#3e73b9',
+    failedColor: '#FE4A49'
+  },
   /*
    ** Customize app manifest
    */
   manifest: {
-    theme_color: '#3e73b9'
+    theme_color: '#3e73b9',
+    short_name: 'Data Center'
   },
   /*
    ** Modules
@@ -32,61 +43,28 @@ module.exports = {
   modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
-    ['@nuxtjs/dotenv', { only: ['PASSPORT_PASSWORD_GRANT_ID'] }]
+    '@nuxtjs/auth'
   ],
   /*
    ** Auth options
    */
   auth: {
     redirect: {
-      login: "/login",
+      login: "/",
       logout: "/",
-      callback: "/login",
-      user: "/",
-      home: "/explore"
+      callback: "/",
+      home: "/users"
     },
     strategies: {
       local: false,
-      password_grant: {
-        _scheme: "local",
-        endpoints: {
-          login: {
-            url: "/oauth/token",
-            method: "post",
-            propertyName: "access_token"
-          },
-          logout: false,
-          user: {
-            url: "api/v1/me",
-            method: 'get',
-            propertyName: false
-          }
-        }
-      },
-      password_grant_custom: {
-        _scheme: "~/auth/schemes/PassportPasswordScheme.js",
-        client_id: process.env.PASSPORT_PASSWORD_GRANT_ID,
-        client_secret: process.env.PASSPORT_PASSWORD_GRANT_SECRET,
-        endpoints: {
-          login: {
-            url: "/oauth/token",
-            method: "post",
-            propertyName: "access_token"
-          },
-          logout: false,
-          user: {
-            url: "api/v1/me",
-            method: 'get',
-            propertyName: false
-          }
-        }
-      },
-      'laravel.passport': {
-        url: "https://justbookr.com",
+      'laravel.passport.custom': {
+        _scheme: "oauth2",
+        url: process.env.LARAVEL_ENDPOINT,
         client_id: process.env.PASSPORT_CLIENT_ID,
-        client_secret: process.env.PASSPORT_CLIENT_SECRET,
-        userinfo_endpoint: "https://justbookr.com/api/v1/me",
+        authorization_endpoint: process.env.LARAVEL_ENDPOINT + "/oauth/authorize",
+        response_type: "token",
+        userinfo_endpoint: process.env.LARAVEL_ENDPOINT + "/api/v1/me",
+        scope: '*',
       }
     }
   },
@@ -95,6 +73,12 @@ module.exports = {
    */
   router: {
     middleware: ['auth']
+  },
+  /*
+   ** Loading indicator options
+   */
+  loadingIndicator: {
+    background: "#f7f9fb"
   },
   /*
    ** Axios options

@@ -1,7 +1,7 @@
 <template>
   <div :class="['network',online ? 'online' : 'offline']">
     <div class="circle"></div>
-    {{ online ? 'online' : 'offline' }}
+    {{ online ? '' : 'No internet connection' }}
   </div>
 </template>
 <script type="text/javascript">
@@ -39,15 +39,15 @@ export default {
 }
 
 .network .circle {
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
-  background: green;
-  padding: .1rem .5rem;
-  border-radius: 1rem;
+    display: none;
 }
 
 .network.offline .circle {
+    display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  padding: .1rem .5rem;
+  border-radius: 1rem;
   background: red;
 }
 

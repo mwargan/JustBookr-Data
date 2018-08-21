@@ -1,94 +1,48 @@
 <template>
-  <div>
-    <div class="wrapper">
-      <logo color="white" :size="75" style="position: absolute;"></logo>
-      <section class="container">
-        <div>
-          <h1 class="title">
-            <current-time format="HH:mm"></current-time>
+  <section class="container">
+    <div>
+      <logo/>
+      <h1 class="title">
+        Data center
       </h1>
-          <h2 class="subtitle">
-        Local time
+      <h2 class="subtitle">
+        by JustBookr
       </h2>
-        </div>
-      </section>
+      <div class="links">
+        <template v-if="$auth.loggedIn">
+        <nuxt-link to="/users" class="button button--blue">Users</nuxt-link>
+        <nuxt-link to="/posts" class="button button--blue">Posts</nuxt-link>
+        <nuxt-link to="/universities" class="button button--blue">Universities</nuxt-link>
+        <nuxt-link to="/books" class="button button--blue">Books</nuxt-link>
+        <nuxt-link to="/orders" class="button button--blue">Orders</nuxt-link>
+        <nuxt-link to="/businesses" class="button button--blue">Businesses</nuxt-link>
+        <a class="button button--grey" href="#" @click.prevent="$auth.logout()">Logout</a>
+        </template>
+        <template v-else>
+          <a class="button button--blue" @click.prevent="$auth.loginWith('laravel.passport.custom')">Continue with JustBookr</a>
+        </template>
+      </div>
+      <br/>
+      <online-indicator></online-indicator>
     </div>
-  </div>
+  </section>
 </template>
 <script>
 import Logo from '~/components/Logo.vue'
-import currentTime from '~/components/currentTime.vue'
+import onlineIndicator from '~/components/onlineIndicator.vue'
 
 export default {
-  components: { Logo, currentTime },
-  auth: false
+  components: { Logo, onlineIndicator },
+  auth: false,
+
+  // computed: {
+  //   currentTime: function() {
+  //     return moment()
+  //   }
+  // }
 }
 
 </script>
-<style scoped>
-.wrapper {
-  width: 100wh;
-  height: 100%;
-  color: #fff;
-  background: linear-gradient(-65deg, #EE7752, #E73C7E, #3e73b9, #23D5AB);
-  background-size: 400% 400%;
-  -webkit-animation: Gradient 555s ease infinite;
-  -moz-animation: Gradient 555s ease infinite;
-  animation: Gradient 555s ease infinite;
-}
-
-@-webkit-keyframes Gradient {
-  0% {
-    background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 50%
-  }
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-@-moz-keyframes Gradient {
-  0% {
-    background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 50%
-  }
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-@keyframes Gradient {
-  0% {
-    background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 50%
-  }
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-
-.title {
-  /* 1 */
-  color: #fff;
-}
-
-.subtitle {
-  color: #fff;
-}
-
-img {
-  height: 125px;
-  width: 125px;
-  border-radius: 50%;
-  object-fit: scale-down;
-  background: #fff;
-}
+<style>
 
 </style>

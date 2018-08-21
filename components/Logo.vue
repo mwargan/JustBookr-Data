@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="JustBookrLogo" to="/info">
+  <nuxt-link class="JustBookrLogo" to="/">
     <img v-if="color === 'dark'" src="https://justbookr.com/images/logoDark.svg" alt="JustBookr Logo - Dark" :width="size">
     <img v-else src="https://justbookr.com/images/logoWhite.svg" alt="JustBookr Logo - White" :width="size" :style="'width:'+size+'px'">
   </nuxt-link>
